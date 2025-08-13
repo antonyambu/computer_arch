@@ -1,0 +1,467 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Software Tools
+}
+
+\author{\IEEEauthorblockN{\textsuperscript{} Enter your Name}
+\IEEEauthorblockA{\textit{Department of Electrical Engineering } \\
+\textit{Indian Institute of Technology
+}\\
+Jammu, Jammu and Kashmir, India \\
+enteryouremail@iitjammu.ac.in  \\
+M.Tech in VLSI Design}
+}
+
+\maketitle
+
+\begin{abstract}
+This work describes a design process, simulation, and analysis of a CMOS-based common source amplifier circuit in the Cadence Virtuoso environment . The suggested CMOS,NMOS,PMOS circuit may be useful in the op-amplifier or other circuits. The circuit is designed to work with a 1.0 V DC power source. The circuit is constructed from two complementary NMOS and PMOS transistors .  Transistors are selected from the gpdk090 library of the Cadence. For the simulation purpose, we have used two sources from the AnalogLib library-one is a DC bias source and the other is a pulse source for the input signals. After designing the circuit, the circuit was simulated to test and assess various performance factors, including gain, phase margin, gain bandwidth, power dissipation, etc. Simulation results confirm that the designed circuit works well at this node. This type of design and simulation experience can give confidence to fabrication engineers regarding its functionality and reliability. Analysis on current characterstics,transconductance,body biasing etc.
+\end{abstract}
+
+\section{Introduction}
+
+
+\section{Cadence Tools}
+The Cadence® Virtuoso® System Design Platform is a holistic, system-based solution that provides the functionality to drive simulation and LVS-clean layout of ICs and packages from a single schematic. There are two key flows: implementation and analysis. \textbf{
+\\Cadence Virtuoso is an Electronic Device Automation }\textbf{tool which is used to design schematics and analyse various }\textbf{parameters. In this report first we will design schematic }\textbf{of NMOS,PMOS ,CMOS inverter and then we will perform DC analysis }\textbf{of NMOS,PMOS,CMOS inverter then we will observe its input output }\textbf{characterisics then we will do DC analysis  and }\textbf{observe output with respect to changing parameters like body biasing,strength ratio, temperature variation on the devices  then we will }\textbf{observe dynamic power,behavior of the circuit on these condition. Then we will perform }\textbf{parameter analysis in which we will fix size of NMOS and }\textbf{vary the size of PMOS and we will observe the output }\textbf{response, same we will be doing by fixing size of PMOS }\textbf{and varying size of NMOS. Various parameters has been changing to achieve the desired functionality.}
+
+\section{Operating Procedure of Cadence Tool}
+\subsection{Step1}
+Linux based server to be used to run the Cadence software. First go to home then left click  create the folder in the linux based system and open terminal.   
+\subsection{Step2}
+Invoke cadence tool as per flow chart Fig . Once tool is invoked by convert it into c shell then source /home/install/cshrc then invoke virtuoso,  to open the CIW window.
+\subsection{Step3}
+Once CIW window is open, create the library for your project and attach it with gpdk90 techology library. Again post creating the library, cellview to be created in the same library to make the circuit.
+\subsection{Step 4}
+Post creating the library and cellview, the editing window will be showing  on the screen to develop a circuit it by adding the instances and different tools pop up to design the circuit.
+\subsection{Step 5}
+Once circuit is constructed, open the ADEL to start the circuit analysis.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{flowchart1.png}
+    \caption{Flowchart of virtuoso}
+    \label{figure1}
+\end{figure}
+
+  \section{Schematic of NMOS transistor operation}
+ Designing  a NMOS transistor we open the gpdk090 from which we select NMOS of 1 Volt (rating), size 120 nm , two voltage supplies (Vdc) of 1V,  2 pin (Vgs and Vds) and ground.Give connection to all the terminals with the help of wire and short body to source Now connect all the instances as per Fig 2. Connect Drain terminal of with Vdc and pin it with Vout.
+ \begin{figure}
+     \centering
+     \includegraphics[width=1\linewidth]{NMOS__trans.png}
+     \caption{Schematic of NMOS Transistor}
+     \label{Schematic of nmos transistor}
+ \end{figure}
+     
+ 
+
+    
+
+\section{DC ANALYSIS OF NMOS}
+For Doing the DC analysis , we open ADEL in which we provide the dc input in which the instance has been provided to the circuit. Select the input Vgs ,dc operating point and component and give start point 0 to 1.
+ 
+
+
+\subsection{Drain Current Ids vs Vds}
+\subsubsection{Step 1}
+To do the anaysis select from the design add the Vgs, Vds pin and drain terminal in ADEL by netlist option, from the circuit.
+\subsubsection{Step 2}
+Open ADEL and found current behaviour as per fig 3 that the current level is different for different Vgs. From the design window select the node of nmos and input Vgs and keep the Vdd at 1 volt(rating). Intially current increasing linearly while it is saturated after certain Vds value which is called Vds(sat). In the above analysis, we vary Vds from 0V to 1V.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Ids and Vds.png}
+    \caption{I-V characterstics}
+    \label{fig:enter-label}
+\end{figure}
+
+
+
+\subsection{gm, power vs Vgs}
+\subsubsection{Step 1}
+To obtain the  gm(Transconductance), right click on Id curve open in the virtuoso and send it to calculator by left clicking on the given plot. Select the derivative of Id (which is the gm) from the calculator and send it to the ADEL so the gm graph can be add with the I-V characteristic graph.\\
+To analyse the gm, it is found that the gm is increasing quadratic as depicted in different factors affect the transconductance Fig. 4.
+For Power calculation simply multiply Vds and Ids from the graph to get the dynamic power and for avaerage use the function in the calculator.Fig.5
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{nmos_transconductance_graph.jpg}
+    \caption{Transconductance of NMOS}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{dynamic power.jpg}
+    \caption{Dynamic Power Vgs}
+    \label{fig:enter-label}
+\end{figure}
+
+
+
+
+
+\subsection{Parametric analysis of NMOS varying temperature}
+\subsubsection{Step 1}
+For  parametric analysis of NMOS transistor. In the virtuoso tab go to tools and then to  the parametric analysis and select the temperature option. Vary the temperature from 25 degree to 125 degree as depicted in Fig. 6 and found that the drain current of the NMOS is decreasing while increasing the temp and select the linear variations with 10 steps analysis.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Temp_vary_vth_nmos.jpeg}
+    \caption{Parametric analysis of NMOS varying the temp}
+    \label{fig:enter-label}
+\end{figure}
+
+
+
+\subsection{Effect of body biasing on NMOS Transistor}
+To do the analysis, add Vdc voltage  having Vth as variable at the body terminal.Open ADEL and from circuit design select the netlist and give variation to obtain the curve.\\
+Go to tools and select the parametric analysis and in that window select the variable Vth and vary it from -1 to +1 and linear method with 20 steps. and observe the variation from the graph in Fig 7
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{effect of body biasing.jpg}
+    \caption{Effect of body biasing in NMOS}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Schematic of PMOS Transistor Operation}
+
+ Designing  a PMOS transistor we open the gpdk090 from which we select PMOS of 1 Volt (rating), size 120 nm , two voltage supplies (Vdc) of 1V,  2 pin (Vgs and Vds) and ground.Give connection to all the terminals with the help of wire and short body to source Now connect all the instances as per Fig 8. Connect Drain terminal of with Vdc and pin it with Vout.
+ \begin{figure}
+     \centering
+     \includegraphics[width=1\linewidth]{pmos_circuit.jpg}
+     \caption{PMOS Circuit}
+     \label{fig:enter-label}
+ \end{figure}
+
+\subsection{DC ANALYSIS OF PMOS}
+For Doing the DC analysis , we open ADEL in which we provide the dc input in which the instance has been provided to the circuit. Select the input Vgs ,dc operating point and component and give start point 0 to 1.
+
+\subsection{Drain Current Ids vs Vds}
+\subsubsection{Step 1}
+To do the anaysis select from the design add the Vgs, Vds pin and drain terminal in ADEL by netlist option, from the circuit.
+\subsubsection{Step 2}
+Open ADEL and found current behaviour as per fig 9 that the current level is different for different Vgs. From the design window select the node of pmos and input Vgs and keep the Vdd at 1 volt(rating). Intially current increasing linearly while it is saturated after certain Vds value which is called Vds(sat). In the above analysis, we vary Vds from 0V to 1V.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{pmos characterstics.jpg}
+    \caption{I-V Characterstics of PMOS}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\section{SCHEMATIC OF CMOS INVERTER}
+Designing inverter, we add the instances in pull down and pull up network as PMOS and NMOS respectively of rated 1V and size 120nm each. Add 2 power DC supplies at input and another at pull up PMOS source terminal of the pull up network. Drain terminal of both the transistor is connected with Vout pin, Gate terminals of both the transistor are connected with Vin pin, Source terminal of NMOS and -ve terminal of both the power supply are connected with ground as in NMOS connect body to source and same in PMOS shown in Fig. 10.
+
+ \begin{figure}
+     \centering
+     \includegraphics[width=1\linewidth]{CMOS_Inverter.jpg}
+     \caption{CMOS INVERTER}
+     \label{fig:enter-label}
+ \end{figure}
+
+
+
+
+
+
+
+{DC Analysis of CMOS}
+ To determine the voltage and current in static condition and drawn the VTC curve depicted in Fig. 11 of the CMOS inverter. To achieve the exact Vm = Vdd/2(Vm is the threshold voltage of the circuit) for which we need to resize of the PMOS has need to be done and taken the PMOS width is 415nm and kept NMOS width at 120nm to achieve the inverter functionality of the circuit.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{VTC_CURVE.jpg}
+    \caption{Inverter VTC curve}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\subsection{Current and Power}
+\subsubsection{Current}
+To get  the current, the drain of any transistor set in ADEL and run the analysis by selecting the node of nmos and input voltage of the inverter. During the analysis keep the Vds at 1 volt.We found that the current is increasing initially and reach the maximum value at Vm and then start decreasing as depicted in Fig 12.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Current cmos.jpeg}
+    \caption{CMOS Current}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\subsubsection{Power}
+To get the static power both current and Vdc to be added in the ADEL and then send it to calculator. Multiply the both and send it back to ADEL for analysis. Select the graph and sent it to calculator for dynamic power simple multipy and for average use the function available in the  calculator.Post running the ADEL, power graph is shown in Fig. 13. To determine the average power, the power graph has been sent to calculator and found Pav = 2.9 µW.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{dynamic_power_cmos.jpg}
+    \caption{Dynamic Power CMOS}
+    \label{fig:enter-label}
+\end{figure}
+
+
+
+\section{Transient Analysis of CMOS Inverter}
+To find the output response of Inverter by applying pulsating input, Vin (Vdc) set to be a pulsating voltage from 0V level to 1V level, keeping pulse width of 5nS, peried 10nS, rise time 100pS and fall time 100pS as depicted in Fig. 10. Posting setting the Vin and Vout in ADEL and found the Vout is inverted voltage of Vin with rising and falling for 100pS as depicted in Fig. 14.and graph on Fig. 15
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Pulsating_cmos_analysis_circuit.jpg}
+    \caption{Schematic of Inverter with Pulsating input}
+    \label{fig:enter-label}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{pulsating_analysis_cmos_graph.jpg}
+    \caption{Transient response of Inverter}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Parametric Analysis of CMOS Inverter}
+In parametric analysis of Cadence, we can analyse by varying the parameters may be its width or any other factor.
+\subsection{Vary width of the PMOS} 
+Since PMOS is slower than NMOS. Hence charging and discharging of the Inverter is not equal. Hence, need to vary the width of PMOS and check the PMOS width size at which the Vm = Vdd/2. \par
+To initiate the parametric analysis, first set the PMOS width as x and then add the x in ADEL with 120n. Now, go to parametric analysis and select the x. Fill the value from 120nm to 1µm and run the parametric analysis. Finally we found that the VTC graph is moving left as shown in Fig. 16.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{cmos_inverter_w_parametric_analysis.jpg}
+    \caption{Varying PMOS width of CMOS Inverter}
+    \label{fig:enter-label}
+\end{figure}
+
+
+
+
+\subsection{Vary temp and checking VTC curve}
+To analyse the power by varying the temperature from 25°C to 125°C and found that the power dissipation is decreasing with increasing the temperature as shown in Fig 17.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Temp_variation_lab5.jpg}
+    \caption{Parametric analysis of VTC Curve varying temp}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Body Biasing effect on CMOS inverter}
+To do the analysis we add different dc voltages with NMOS and PMOS respectively and we add parametric analysis to the circuit. We vary Voltages from -1 volts to +1 volts in which we get the analysis as shown in Fig 18 and Fig19.
+We take linear parametric analysis with 10 analysis steps to check the body biasing variation on the VTC curve as shown in Fig 19.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Rahul_Tanuj_Lab6_threshold_parameter.jpg}
+    \caption{Schematic Body Biasing CMOS Inverter}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Body_Biasing_lab6_threshold_change_parameter2.jpg}
+    \caption{Parametric analysis on Body Biasing}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Parametric analysis of w on PMOS Transistor}
+ To do the analysis on PMOS by varying width w similarly as performed on ADEL.As shown in Fig 20 and Fig 21.
+ Input changes from 0 to 1 as DC analysis performed and w is changes from 120nm to 500 nm through which variation in the PMOS transistor has been observed.In the ADEL select the parameters where data is in need.After the analysis w parameter Vth variation has been observed.
+ \begin{figure}
+     \centering
+     \includegraphics[width=1\linewidth]{PMOS Circuit.jpg}
+     \caption{PMOS Circuit}
+     \label{fig:enter-label}
+ \end{figure}
+ \begin{figure}
+     \centering
+     \includegraphics[width=1\linewidth]{pmos_w_parametric_graph.jpg}
+     \caption{W Parametric analysis on PMOS Transistor}
+     \label{fig:enter-label}
+ \end{figure}
+
+
+\section{Symbol of CMOS INVERTER (NOT GATE)}
+
+Step 1:To make the symbol of CMOS INVERTER NOT GATE,Select the pins input A and Output pin Y
+
+Step 2:Go to Create , cell view, from cell view convert schematic to symbol,from black box to symbol.
+
+Step 3: Now, go to create select the shape,select line make the inverter and select the output as circle and consider the pin as Y.
+
+
+\begin{figure}[h] % 'h' means the figure will be placed approximately here
+    \centering
+    \includegraphics[width=0.5\textwidth]{symbol inverter.jpg} % Adjust the width and file name here
+    \caption{Symbol of Inverter.} % Caption for the figure
+     
+\end{figure}
+
+
+\section{Monte Carlo of CMOS Inverter}
+Monte Carlo analysis is a method used to understand how
+random variations during manufacturing affect the performance of CMOS Inverter. It does this by introducing randomness or variability into crucial parameters, such as the
+thresholds of transistors and oxide thickness. This process
+provides valuable insight into issues related to yield (the
+number of functioning chips produced) and the reliability of
+the chips. In essence, Monte Carlo analysis helps designers
+account for the uncertainties and variations that occur during
+the manufacturing process, allowing them to make more robust
+and reliable CMOS inverters.In this way,CMOS Inverter's Monte Carlo has been done.
+ 
+ 
+ 
+ \begin{figure}[h] % 'h' means the figure will be placed approximately here
+    \centering
+    \includegraphics[width=0.5\textwidth]{cmos inverter layout carlo final.png} % Adjust the width and file name here
+    \caption{Monte Carlo of CMOS Inverter.} % Caption for the figure
+     
+\end{figure}
+
+ \section{Layout of CMOS Inverter.}
+
+ Step 1: Go to launch ,then Layout XL,connectivity ,generate from all sources.
+
+Step 2:Using shift and other commands connect all the drain ,sources to their 
+    respective nodes, using the metal 1 of with 0.12 micro meter.
+
+Step 3: Use the poly silicon , first implement the inverters and connect the input A and make their inverters. 
+
+Step 4: Connect the pmos and nmos according to the connection and form the equivalent circuit using appropriate dimensions.
+
+Step 5: Go to Places,pin placement, use the vdd to horizontal rail at the top level and convert the bottom to the horizontal rail to the bottom level.
+
+Step 6: Go to the assura ,run DRC, remove the error(if any).
+
+Step 7: Go to the LVC,run it, remove the error(if any).
+
+ \begin{figure}[h] % 'h' means the figure will be placed approximately here
+    \centering
+    \includegraphics[width=0.5\textwidth]{cmos inverter layout final.png} % Adjust the width and file name here
+    \caption{Layout of CMOS Inverter.} % Caption for the figure
+     
+\end{figure}
+
+ \begin{figure}[h] % 'h' means the figure will be placed approximately here
+    \centering
+    \includegraphics[width=0.5\textwidth]{cmos inverter nodrc final.png} % Adjust the width and file name here
+    \caption{No DRC of CMOS Inverter.} % Caption for the figure
+     
+\end{figure}
+
+\begin{section}{LVS of CMOS Inverter}
+
+Step 1: To check the LVS ,Go to the assura, click on the run assura LVS.
+
+Step 2: Add the Directory over the instance and give the command to run it. 
+
+Step 3:Remove the error(if any) ,Hence LVS run successfully.
+
+Note:LVS (Layout vs. Schematic) in Cadence is a verification process that ensures the physical layout of a circuit matches the intended schematic design.
+
+
+ \begin{figure}[h] % 'h' means the figure will be placed approximately here
+    \centering
+    \includegraphics[width=0.5\textwidth]{cmos inverter lvs final.png} % Adjust the width and file name here
+    \caption{LVS of CMOS Inverter.} % Caption for the figure
+     
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Ring Padding of CMOS Inverter}
+
+In Cadence Virtuoso, during the floor planning and layout stages, it’s essential to add padding around key areas of the design. This extra space ensures there’s enough room for routing connections and helps comply with manufacturing design rules. Padding also accommodates process variations, ensuring the layout meets fabrication requirements and performance standards.The ring padding of cmos inverter. 
+
+\begin{figure}[h] % 'h' means the figure will be placed approximately here
+    \centering
+    \includegraphics[width=0.5\textwidth]{cmos inverter ring.png} % Adjust the width and file name here
+    \caption{Ring Padding of CMOS Inverter.} % Caption for the figure
+     
+\end{figure}
+ 
+\begin{Dynamic Power Analysis} 
+ 
+Dynamic power dissipation in a pseudo PMOS XOR gate
+arises from the continuous charging and discharging of internal
+capacitances during input signal transitions. As the inputs
+switch, energy is consumed to drive the gate capacitance,
+leading to power loss.
+This power dissipation depends on the switching frequency
+and the number of transitions per clock cycle. Higher input
+activity and clock frequency result in increased dynamic power
+consumption in the XOR gate.
+Step 1: Do the transient analysis for different inputs using
+the vpulse.
+Step 2: Open ADEL, select the netlist,run the adel,and observe
+the graph.
+step 3: Go to result , select power waveform and sent to
+calculator.Hence, the output of power will be observed.
+ 
+\begin{figure}[h] % 'h' means the figure will be placed approximately here
+    \centering
+    \includegraphics[width=0.5\textwidth]{cmos dynamic power.png} % Adjust the width and file name here
+    \caption{Dynamic power of CMOS Inverter.} % Caption for the figure
+     
+\end{figure} 
+ 
+ 
+\begin{figure}[h] % 'h' means the figure will be placed approximately here
+    \centering
+    \includegraphics[width=0.5\textwidth]{dynamic table.png} % Adjust the width and file name here
+    \caption{Different Dynamic power at Temparature Variation from 25 to 150 degree.} % Caption for the figure
+     
+\end{figure}  
+ 
+ 
+ 
+ 
+ 
+ 
+ \section{CONCLUSION} 
+In the  DC analysis, we have performed various analysis on NMOS, PMOS and CMOS based transistor on width body biasing and temperature as well as transient response of CMOS Transistor has been observed.How the point where Vin and Vout meets, i.e Vm, varies when parameters like width(W) to check the PMOS width for achieving Inverter characteristics. Various Graph has been plotted and scientific study has been developed
+\section{ACKNOWLEDGMENT}
+I am thankful towards the ICResQ Lab, IIT Jammu for
+providing the required infrastructure and support.
+
+
+\begin{thebibliography}{3}
+
+\bibitem{cadence2020} 
+Cadence Design Systems. (2020). 
+\textit{Introduction to CMOS Inverter Design with Virtuoso}. 
+
+
+\bibitem{katz2010} 
+Katz, R. H., \& Givargis, T. (2010). 
+\textit{CMOS VLSI Design: A Circuits and Systems Perspective}. 
+Pearson.
+
+\bibitem{khakifirooz2017} 
+Khakifirooz, A., \& Abadi, M. (2017). 
+\textit{Efficient Simulation Techniques for CMOS Inverters Using Cadence Virtuoso}. 
+\textit{Journal of VLSI Design Automation}, 25(7), 1301-1312. 
+\doi{10.1109/JVLSID.2017.031040}.
+
+\end{thebibliography}
+
+\end{document}
